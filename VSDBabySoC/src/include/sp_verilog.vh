@@ -1,3 +1,5 @@
+`ifndef SP_DEFAULT
+`define SP_DEFAULT
 /*
 Copyright (c) 2015, Steven F. Hoover
 
@@ -25,47 +27,39 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-// Project-independent SandPiper header file.
 
-`ifndef SANDPIPER_VH
-`define SANDPIPER_VH
+// File included by SandPiper-generated code for the default project configuration.
+`include "sandpiper.vh"
 
 
-// Note, these have no SP prefix, so collisions are possible.
-     
+// Latch macros.  Inject 'x in simulation for clk === 'x.
 
-`ifdef WHEN
-   // Make sure user definition does not collide.
-   !!!ERROR: WHEN macro already defined
+// A-phase latch.
+`ifdef SP_PHYS
+`define TLV_LATCH(in, out, clk) \
+always @ (in, clk) begin        \
+  if (clk === 1'b1)             \
+    out <= in;                  \
+  else if (clk === 1'bx)        \
+    out <= 'x;                  \
+end
 `else
-   `ifdef SP_PHYS
-      // Phys compilation disabled X-injection.
-      `define WHEN(valid_sig)
-   `else
-      // Inject X.
-      `define WHEN(valid_sig) !valid_sig ? 'x :
-   `endif
-`endif
+`define TLV_LATCH(in, out, clk) always @ (in, clk) if (clk == 1'b1) out <= in;
+`endif  // SP_PHYS
+
+// B-phase latch.
+`ifdef SP_PHYS
+`define TLV_BLATCH(out, in, clk) \
+always @ (in, clk) begin         \
+  if (!clk === 1'b1)             \
+    out <= in;                   \
+  else if (!clk === 1'bx)        \
+    out <= 'x;                   \
+end
+`else
+`define TLV_BLATCH(out, in, clk) always @ (in, clk) if (!clk == 1'b1) out <= in;
+`endif  // SP_PHYS
 
 
-// SandPiper does not generate set/reset flops.  Reset is implemented as combinational
-// logic, and it is up to synthesis to infer set/reset flops when possible.
-//`ifdef RESET
-//   // Make sure user definition does not collide.
-//   !!!ERROR: RESET macro already defined
-//`else
-//   `define RESET(i, reset) ((reset) ? '0 : i)
-//`endif
-//
-//`ifdef SET
-//   // Make sure user definition does not collide.
-//   !!!ERROR: SET macro already defined
-//`else
-//   `define SET(i, set) ((set) ? '1 : i)
-//`endif
-
-// Since SandPiper required use of all signals, this is useful to create a
-// bogus use and keep SandPiper happy when a signal, by intent, has no uses.
-`define BOGUS_USE(ignore)
-
-`endif  // SANDPIPER_VH
+	   
+`endif  // SP_DEFAULT
