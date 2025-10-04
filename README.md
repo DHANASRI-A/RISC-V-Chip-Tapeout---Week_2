@@ -66,6 +66,18 @@ VSDBabySoC is a compact yet highly capable **SoC based on RISC-V architecture**,
 | `vsdbabysoc.v`                    | Top-level SoC integration module           |
 
 ---
+## Clone the BabySoC Repository
+
+Before proceeding with simulation or synthesis, clone the official **VSDBabySoC** repository to your local system.
+
+```bash
+git clone https://github.com/manili/VSDBabySoC
+cd VSDBabySoC
+```
+
+This command will create a local copy of the repository and move you into the project directory.
+
+---
 
 ## Simulation Setup
 
