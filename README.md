@@ -1,6 +1,8 @@
+
+
 # VSDBabySoC – Functional Modelling & FPGA Synthesis
 
-This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC).
+This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC). The project integrates the **RVMYTH CPU core**, **PLL**, and **DAC**, and is designed for educational and verification purposes.
 
 ---
 
@@ -159,67 +161,45 @@ VSDBabySoC/
 
 ### Yosys Synthesis Workflow
 
-1. **Prepare output folder:**
-
-```bash
-mkdir -p ./output/synth
 ```
-
-2. **Start Yosys:**
-
-```bash
-yosys
-```
-
-3. **Read Verilog source files:**
-
-```tcl
+# 1. Load top module
 read_verilog ./src/module/vsdbabysoc.v
+
+# 2. Load CPU core
 read_verilog -I ./src/include ./src/module/rvmyth.v
+
+# 3. Load clock gate
 read_verilog -I ./src/include ./src/module/clk_gate.v
-```
+# (comment out include "sp_verilog.vh" in clk_gate.v if missing)
 
-4. **Read standard cell libraries:**
+# 4. Read standard cell / custom libraries
+read_liberty -lib ./src/lib/avsdpll.lib
+read_liberty -lib ./src/lib/avsddac.lib
+read_liberty -lib ./src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 
-```tcl
-read_liberty -lib ./lib/avsdpll.lib
-read_liberty -lib ./lib/avsddac.lib
-read_liberty -lib ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-```
-
-5. **Check hierarchy:**
-
-```tcl
+# 5. Check hierarchy
 hierarchy -check -top vsdbabysoc
-```
 
-6. **Synthesize design:**
-
-```tcl
+# 6. Synthesis
 synth -top vsdbabysoc
-```
 
-7. **Map D flip-flops & optimize:**
+# 7. Map D flip-flops
+dfflibmap -liberty ./src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 
-```tcl
-dfflibmap -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+# 8. Optimize
 opt
-abc -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-```
 
-8. **Flatten & clean netlist:**
+# 9. Technology mapping using ABC
+abc -liberty ./src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib -script +strash;scorr;ifraig;retime;{D};strash;dch,-f;map,-M,1,{D}
 
-```tcl
+# 10. Flatten and clean
 flatten
 setundef -zero
 clean -purge
 rename -enumerate
 stat
-```
 
-9. **Write synthesized Verilog:**
-
-```tcl
+# 11. Write synthesized Verilog
 write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
 ```
 
@@ -229,11 +209,24 @@ write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
 > * `screenshots/flattened_stat.png` – flattened netlist stats.
 > * `screenshots/synth_file.png` – generated synthesized Verilog.
 
+---
+
+## Errors Encountered & Lessons Learned
+
+1. Module paths incorrect → fixed by correcting `-I` and file paths.
+2. Output folder missing → created manually before `write_verilog`.
+3. Library loading errors → verified `.lib` files exist in `lib/`.
+4. Yosys commands vs shell commands → `mkdir` must be done in terminal, not inside Yosys.
+
+> **Screenshot:** `screenshots/error_messages.png` (optional)
 
 ---
 
+## Next Steps
 
+* Perform **FPGA place-and-route**.
+* Analyze **timing and power** for the SoC.
+* Extend design with additional IPs/peripherals.
+* Combine simulation and gate-level verification for robust SoC development.
 
 ---
-
-
