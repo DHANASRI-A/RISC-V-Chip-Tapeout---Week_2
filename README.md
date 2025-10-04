@@ -1,6 +1,6 @@
-# BabySoC Functional Modelling & Simulation
+# VSDBabySoC – Functional Modelling & FPGA Synthesis
 
-This repository demonstrates **functional modelling and simulation** of the VSDBabySoC project. The goal is to understand the **SoC fundamentals** and verify its **module interactions** using simulation tools like **Icarus Verilog** and **GTKWave**.
+This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC).
 
 ---
 
@@ -12,149 +12,227 @@ This repository demonstrates **functional modelling and simulation** of the VSDB
 * [Simulation Setup](#simulation-setup)
 * [Simulation Steps](#simulation-steps)
 * [Observations & Waveforms](#observations--waveforms)
-* [Conclusion](#conclusion)
+* [FPGA Synthesis with Yosys](#fpga-synthesis-with-yosys)
+* [Errors Encountered & Lessons Learned](#errors-encountered--lessons-learned)
+* [Next Steps](#next-steps)
 
 ---
 
 ## Introduction
 
-VSDBabySoC is a compact RISC-V-based **System on Chip (SoC)** designed to integrate and test multiple open-source IP cores:
+VSDBabySoC is a compact yet highly capable **SoC based on RISC-V architecture**, designed to:
 
-* **RVMYTH:** A small RISC-V CPU core.
-* **PLL:** 8x phase-locked loop for generating a stable clock.
-* **DAC:** 10-bit digital-to-analog converter for interfacing with analog devices.
+* Integrate and test multiple open-source IP cores.
+* Calibrate analog components such as DAC.
+* Serve as a learning platform for **SoC fundamentals** and **RTL verification**.
 
-The purpose of this project is to **simulate the SoC behavior at the RTL level**, verify module interactions, and observe signal dataflow before performing any synthesis.
+**Key Modules:**
+
+* **RVMYTH:** Small RISC-V CPU core.
+* **PLL:** 8x phase-locked loop for stable clock generation.
+* **DAC:** 10-bit digital-to-analog converter for analog interfacing.
+
+**Functionality Overview:**
+
+1. **Initialization & Clock Generation:** BabySoC activates the PLL to generate a stable clock for synchronization.
+2. **Data Processing:** RVMYTH processes data, updating internal registers to feed the DAC.
+3. **Analog Signal Generation:** DAC converts processed digital data to analog output for external devices.
 
 ---
 
 ## Objective
 
-* Gain practical understanding of **SoC components** and their interaction.
-* Perform **functional simulation** of BabySoC.
-* Analyze signals using **GTKWave** to verify:
-
-  * Reset operation
-  * Clocking
-  * Dataflow between modules
+* Learn **SoC fundamentals** and functional verification.
+* Perform **BabySoC simulation** using **Icarus Verilog & GTKWave**.
+* Synthesize the SoC for FPGA using **Yosys** and understand **gate-level mapping**.
 
 ---
 
 ## BabySoC Modules
 
-The following Verilog files are used in this project:
-
 | Module/File                       | Description                                |
 | --------------------------------- | ------------------------------------------ |
 | `avsddac.v`                       | DAC module for analog output               |
-| `avsdpll.v`                       | PLL for stable clock generation            |
+| `avsdpll.v`                       | PLL for clock generation                   |
 | `clk_gate.v`                      | Clock gating logic                         |
 | `pseudo_rand.sv`                  | Pseudo-random signal generation            |
 | `pseudo_rand_gen.sv`              | Testbench helper for pseudo-random signals |
 | `rvmyth.tlv`                      | RISC-V CPU core (TL-Verilog)               |
 | `testbench.v`                     | Main simulation testbench                  |
-| `testbench.rvmyth.post-routing.v` | Post-routing simulation testbench          |
-| `vsdbabysoc.v`                    | Top-level BabySoC integration module       |
+| `testbench.rvmyth.post-routing.v` | Post-routing testbench                     |
+| `vsdbabysoc.v`                    | Top-level SoC integration module           |
 
 ---
 
 ## Simulation Setup
 
-**Tools Used:**
+**Tools Required:**
 
-* **Icarus Verilog (`iverilog`)** – Compile Verilog code and generate simulation executable.
-* **GTKWave** – View waveform files (`.vcd`) for signal analysis.
-
-**Prerequisite:** Ensure the BabySoC Verilog modules are available in your working directory.
+* **Icarus Verilog (`iverilog`)** – Compile Verilog modules.
+* **GTKWave** – View `.vcd` waveform files for signal analysis.
 
 ---
 
 ## Simulation Steps
 
-1. **Clone the BabySoC repository:**
+1. **Clone the BabySoC repo:**
 
 ```bash
 git clone https://github.com/manili/VSDBabySoC
 cd VSDBabySoC/src/module/
 ```
 
-2. **Compile the Verilog modules using Icarus Verilog:**
+2. **Compile Verilog modules:**
 
 ```bash
 iverilog -o ../../output/babysoc_sim.out -I ../include *.v testbench.v
 ```
 
-> Explanation:
->
-> * `-o` specifies the output executable.
-> * `-I ../include` adds the header file directory.
-> * `*.v` includes all Verilog modules.
-> * `testbench.v` contains the testbench to drive simulation.
-
-3. **Run the simulation to generate `.vcd` waveform files:**
+3. **Run simulation:**
 
 ```bash
 ./../../output/babysoc_sim.out
 ```
 
-4. **Open `.vcd` file in GTKWave:**
+4. **Open waveform in GTKWave:**
 
 ```bash
 gtkwave ../../output/babysoc_sim.vcd
 ```
 
-> In GTKWave, observe the following signals:
+**Signals to Observe:**
+
+* **Reset:** All modules initialize properly.
+* **Clock:** PLL provides a stable, periodic clock.
+* **Dataflow:** RVMYTH outputs correctly update DAC inputs.
+
+> **Screenshots:**
 >
-> * **Reset** – Ensure all modules initialize correctly.
-> * **Clock** – Verify PLL generates a stable periodic clock.
-> * **Dataflow** – Observe how RVMYTH output goes to DAC (`OUT`), and how other signals change over time.
+> * Terminal showing compilation and simulation.
+> * GTKWave waveform of reset, clock, and dataflow signals.
 
 ---
 
 ## Observations & Waveforms
 
-### 1. Reset Operation
+### Reset Operation
 
-**Screenshot:** Include a screenshot of the reset signal waveform in GTKWave here.
+**Screenshot:** `screenshots/reset_waveform.png`
+**Observation:** All registers are properly initialized.
 
-**Observation:** The reset signal initializes all registers in BabySoC correctly and ensures the SoC starts in a known state.
+### Clock Signal
 
----
+**Screenshot:** `screenshots/clock_waveform.png`
+**Observation:** Clock is stable, driving sequential elements correctly.
 
-### 2. Clock Signal
+### Dataflow Between Modules
 
-**Screenshot:** Include a screenshot showing the clock waveform from PLL.
-
-**Observation:** Clock is stable and periodic. All sequential elements (flip-flops) respond correctly to the clock edges.
-
----
-
-### 3. Dataflow Between Modules
-
-**Screenshot:** Include a screenshot showing RVMYTH register output and DAC output.
-
-**Observation:**
-
-* RVMYTH updates its register values as per the instruction sequence.
-* DAC correctly converts digital values to analog-like outputs (observed as digital in simulation).
-* Signals are consistent with expected module interaction.
+**Screenshot:** `screenshots/dataflow_waveform.png`
+**Observation:** RVMYTH updates registers, DAC converts digital signals to analog-like outputs.
 
 ---
 
-## Conclusion
+## FPGA Synthesis with Yosys
 
-* BabySoC simulation confirms proper **module integration**.
-* Functional modelling helps identify potential issues **before synthesis**.
-* GTKWave visualization provides a clear understanding of **signal timing and dataflow**.
-* This forms a solid foundation for **RTL design verification and SoC development**.
+### Repository Structure
+
+```
+VSDBabySoC/
+├── src/
+│   ├── module/
+│   │   ├── vsdbabysoc.v
+│   │   ├── rvmyth.v
+│   │   └── clk_gate.v
+│   └── include/
+│       └── sp_verilog.vh
+├── lib/
+│   ├── avsdpll.lib
+│   ├── avsddac.lib
+│   └── sky130_fd_sc_hd__tt_025C_1v80.lib
+└── output/
+    └── synth/
+```
+
+> **Screenshot:** `screenshots/repo_structure.png`
 
 ---
 
-### Screenshots
+### Yosys Synthesis Workflow
 
-* **Reset waveform:** Place after Step 4 explanation.
-* **Clock waveform:** Place after Step 4 explanation.
-* **Dataflow signals:** Place under Observations section.
+1. **Prepare output folder:**
+
+```bash
+mkdir -p ./output/synth
+```
+
+2. **Start Yosys:**
+
+```bash
+yosys
+```
+
+3. **Read Verilog source files:**
+
+```tcl
+read_verilog ./src/module/vsdbabysoc.v
+read_verilog -I ./src/include ./src/module/rvmyth.v
+read_verilog -I ./src/include ./src/module/clk_gate.v
+```
+
+4. **Read standard cell libraries:**
+
+```tcl
+read_liberty -lib ./lib/avsdpll.lib
+read_liberty -lib ./lib/avsddac.lib
+read_liberty -lib ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+5. **Check hierarchy:**
+
+```tcl
+hierarchy -check -top vsdbabysoc
+```
+
+6. **Synthesize design:**
+
+```tcl
+synth -top vsdbabysoc
+```
+
+7. **Map D flip-flops & optimize:**
+
+```tcl
+dfflibmap -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+opt
+abc -liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+8. **Flatten & clean netlist:**
+
+```tcl
+flatten
+setundef -zero
+clean -purge
+rename -enumerate
+stat
+```
+
+9. **Write synthesized Verilog:**
+
+```tcl
+write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
+```
+
+> **Screenshots:**
+>
+> * `screenshots/synth_summary.png` – synthesis summary.
+> * `screenshots/flattened_stat.png` – flattened netlist stats.
+> * `screenshots/synth_file.png` – generated synthesized Verilog.
+
+
+---
+
+
 
 ---
 
