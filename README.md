@@ -13,6 +13,7 @@ This repository demonstrates the **functional modelling, simulation, and synthes
 * [Objective](#objective)
 * [BabySoC Modules](#babysoc-modules)
 * [Simulation Setup](#simulation-setup)
+* [TLV to Verilog Conversion](#tlv-to-verilog-conversion)
 * [Simulation Steps](#simulation-steps)
 * [Submodule Functional Simulation](#submodule-functional-simulation)
 * [Synthesis with Yosys](#synthesis-with-yosys)
@@ -74,6 +75,100 @@ VSDBabySoC is a compact yet highly capable **SoC based on RISC-V architecture**,
 * **GTKWave** – View `.vcd` waveform files for signal analysis.
 
 ---
+
+
+## TLV to Verilog Conversion
+
+In the **VSDBabySoC** repository, the **RVMYTH** processor core is written in **TL-Verilog (.tlv)** format.
+Before running simulations, it must be **converted into a Verilog (.v)** file.
+This conversion is done using the **SandPiper-SaaS** tool inside a Python virtual environment.
+
+---
+
+### Steps for TLV to Verilog Conversion
+
+#### 1. Install required packages
+
+Open your terminal and install the Python virtual environment tools:
+
+```bash
+sudo apt update
+sudo apt install python3-venv python3-pip
+```
+
+---
+
+#### 2. Create and activate a virtual environment
+
+Navigate to the BabySoC project folder, create a new environment, and activate it:
+
+```bash
+cd ~/VLSI/VSDBabySoC/
+python3 -m venv sp_env
+source sp_env/bin/activate
+```
+
+Once activated, your terminal prompt will show the environment name `(sp_env)`.
+
+---
+
+#### 3. Install SandPiper-SaaS
+
+With the environment active, install the required Python packages including **SandPiper-SaaS**:
+
+```bash
+pip install pyyaml click sandpiper-saas
+```
+
+---
+
+#### 4. Convert TLV file to Verilog
+
+Now convert the **rvmyth.tlv** file into a **Verilog (.v)** file using the command below:
+
+```bash
+sandpiper-saas -i ./src/module/*.tlv -o rvmyth.v --bestsv --noline -p verilog --outdir ./src/module/
+```
+
+After successful conversion, you’ll find a new file named `rvmyth.v` inside the `src/module` directory.
+
+---
+
+#### 5. Verify the generated files
+
+You can confirm the new Verilog file was created by listing the directory contents:
+
+```bash
+cd ~/VLSI/VSDBabySoC/
+ls src/module/
+```
+
+**Expected output:**
+
+```
+avsddac.v  avsdpll.v  clk_gate.v  pseudo_rand_gen.sv  pseudo_rand.sv  
+rvmyth_gen.v  rvmyth.tlv  rvmyth.v  testbench.rvmyth.post-routing.v  
+testbench.v  vsdbabysoc.v
+```
+
+---
+
+### Important Notes
+
+* Every time you open a new terminal session, activate the environment before running SandPiper:
+
+  ```bash
+  source sp_env/bin/activate
+  ```
+
+* To deactivate the environment when you’re done:
+
+  ```bash
+  deactivate
+  ```
+
+---
+
 ## Submodule Functional Simulation
 
 Before simulating the complete SoC (`vsdbabysoc.v`), each **submodule** is functionally verified individually to ensure correct behavior.
@@ -84,11 +179,6 @@ The DAC (Digital-to-Analog Converter) converts the digital data output from the 
 
 #### **Commands Used**
 
-**Clone the BabySoC repo:**
-
-```bash
-git clone https://github.com/manili/VSDBabySoC
-```
 
 ```bash
 # Create output directory
