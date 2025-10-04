@@ -101,17 +101,7 @@ iverilog -o ../../output/babysoc_sim.out -I ../include *.v testbench.v
 gtkwave ../../output/babysoc_sim.vcd
 ```
 
-**Signals to Observe:**
-
-* **Reset:** All modules initialize properly.
-* **Clock:** PLL provides a stable, periodic clock.
-* **Dataflow:** RVMYTH outputs correctly update DAC inputs.
-
-> **Screenshots:**
->
-> * Terminal showing compilation and simulation.
-> * GTKWave waveform of reset, clock, and dataflow signals.
-
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_pre_synthesis.png)
 ---
 
 ## Observations & Waveforms
@@ -291,11 +281,7 @@ testbench.v
 gtkwave post_synth_sim.vcd
 ```
 
-**Signals to Observe:**
-
-* **Reset Operation:** Ensures all modules initialize correctly at the gate level.
-* **Clocking:** PLL and clock gates generate proper clock signals.
-* **Dataflow:** RVMYTH outputs propagate correctly through synthesized logic to DAC.
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_post_synthesis.png)
 
 > **Screenshots:**
 >
