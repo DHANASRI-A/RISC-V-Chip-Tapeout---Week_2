@@ -283,11 +283,7 @@ gtkwave post_synth_sim.vcd
 
 ![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_post_synthesis.png)
 
-> **Screenshots:**
->
-> * `screenshots/post_synth_reset.png` – Reset waveform
-> * `screenshots/post_synth_clock.png` – Clock waveform
-> * `screenshots/post_synth_dataflow.png` – Dataflow waveform
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_pre_synthesis.png)
 
 **Observation:**
 The synthesized netlist matches the functional behaviour of the RTL design, confirming correctness post-synthesis.
