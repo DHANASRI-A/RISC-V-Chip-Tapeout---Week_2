@@ -84,6 +84,12 @@ The DAC (Digital-to-Analog Converter) converts the digital data output from the 
 
 #### **Commands Used**
 
+**Clone the BabySoC repo:**
+
+```bash
+git clone https://github.com/manili/VSDBabySoC
+```
+
 ```bash
 # Create output directory
 mkdir -p ~/Desktop/VSDBabySoC/output/avsddac
@@ -160,7 +166,6 @@ vvp /home/vsduser/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out
 gtkwave rvmyth.vcd
 ```
 
-#### **Screenshot:**
 
 > ![RVMYTH Simulation Waveform](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/bcdfa7f277119bb107e9d3cd20dfc8d8441418b1/Pictures/w2_rvmyth.png)
 
@@ -183,10 +188,10 @@ The CPU executes basic instructions and correctly drives the internal data bus. 
 
 ## Simulation Steps
 
-1. **Clone the BabySoC repo:**
+1. **Set the directory**
 
 ```bash
-git clone https://github.com/manili/VSDBabySoC
+
 cd VSDBabySoC/src/module/
 ```
 
