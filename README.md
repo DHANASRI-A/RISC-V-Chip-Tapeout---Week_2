@@ -162,7 +162,7 @@ gtkwave rvmyth.vcd
 
 #### **Screenshot:**
 
-> ![RVMYTH Simulation Waveform](screenshots/rvmyth_waveform.png)
+> ![RVMYTH Simulation Waveform](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/bcdfa7f277119bb107e9d3cd20dfc8d8441418b1/Pictures/w2_rvmyth.png)
 
 #### **Observation:**
 
