@@ -233,12 +233,4 @@ stat
 write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
 ```
 
-
-## Next Steps
-
-* Perform **FPGA place-and-route**.
-* Analyze **timing and power** for the SoC.
-* Extend design with additional IPs/peripherals.
-* Combine simulation and gate-level verification for robust SoC development.
-
 ---
