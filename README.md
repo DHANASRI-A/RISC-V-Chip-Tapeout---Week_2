@@ -15,7 +15,7 @@ This repository demonstrates the **functional modelling, simulation, and FPGA sy
 * [Simulation Steps](#simulation-steps)
 * [Observations & Waveforms](#observations--waveforms)
 * [FPGA Synthesis with Yosys](#fpga-synthesis-with-yosys)
-* [Next Steps](#next-steps)
+* [Post-Synthesis Functional Simulation](#post-synthesis-functional-simulation)
 
 ---
 
@@ -234,3 +234,78 @@ write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
 ```
 
 ---
+
+## Post-Synthesis Functional Simulation
+
+After generating the synthesized netlist, it’s important to **verify functionality at the gate level**. This ensures the design still behaves correctly after synthesis.
+
+---
+
+### **Step 1: Copy standard cell and synthesized netlist files**
+
+```bash
+cd ~/Desktop/VSDBabySoC/src/module
+cp ../gls_model/sky130_fd_sc_hd.v .
+cp ../gls_model/primitives.v .
+cp ../../output/post_synth_sim/vsdbabysoc.synth.v .
+```
+
+Standard cell and primitive definitions are required for simulating the synthesized design. The netlist file (`vsdbabysoc.synth.v`) contains the gate-level implementation.
+
+---
+
+### **Step 2: Compile the testbench with Icarus Verilog**
+
+```bash
+iverilog -o ../../output/post_synth_sim/post_synth_sim.out \
+-DPOST_SYNTH_SIM -DFUNCTIONAL -DUNIT_DELAY=#1 \
+-I ../include -I . \
+testbench.v
+```
+
+
+
+* `-DPOST_SYNTH_SIM` defines macro for post-synthesis simulation.
+* `-DFUNCTIONAL` ensures functional simulation mode.
+* `-DUNIT_DELAY=#1` assigns gate delay for the simulation.
+* `-I` flags include header files.
+
+---
+
+### **Step 3: Run the simulation**
+
+```bash
+../../output/post_synth_sim/post_synth_sim.out
+```
+
+* Executes the post-synthesis simulation, generating `.vcd` waveform output.
+
+> **Screenshot:** Terminal showing simulation run
+> Example: `screenshots/post_synth_terminal.png`
+
+---
+
+### **Step 4: View the waveforms in GTKWave**
+
+```bash
+gtkwave post_synth_sim.vcd
+```
+
+**Signals to Observe:**
+
+* **Reset Operation:** Ensures all modules initialize correctly at the gate level.
+* **Clocking:** PLL and clock gates generate proper clock signals.
+* **Dataflow:** RVMYTH outputs propagate correctly through synthesized logic to DAC.
+
+> **Screenshots:**
+>
+> * `screenshots/post_synth_reset.png` – Reset waveform
+> * `screenshots/post_synth_clock.png` – Clock waveform
+> * `screenshots/post_synth_dataflow.png` – Dataflow waveform
+
+**Observation:**
+The synthesized netlist matches the functional behaviour of the RTL design, confirming correctness post-synthesis.
+
+---
+
+
