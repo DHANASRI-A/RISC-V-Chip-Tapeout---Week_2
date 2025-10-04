@@ -135,9 +135,10 @@ vvp ~/Desktop/VSDBabySoC/output/avsddac/avsddac.out
 gtkwave avsddac.vcd
 ```
 
-#### **Screenshot:**
 
-> ![DAC Simulation Waveform](screenshots/avsddac_waveform.png)
+![DAC Simulation Waveform](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/a0648b3696f106f44d0bad2ee98ffa754991ca1e/Pictures/w2_avsddac.png)
+
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/a0648b3696f106f44d0bad2ee98ffa754991ca1e/Pictures/w2_avsddac_wave.png)
 
 #### **Observation:**
 
@@ -164,9 +165,7 @@ vvp ~/Desktop/VSDBabySoC/output/avsdpll/avsdpll.out
 gtkwave avsdpll.vcd
 ```
 
-#### **Screenshot:**
-
-> ![PLL Simulation Waveform](screenshots/avsdpll_waveform.png)
+> ![PLL Simulation Waveform](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/a0648b3696f106f44d0bad2ee98ffa754991ca1e/Pictures/w2_avsdpll.png)
 
 #### **Observation:**
 
