@@ -18,6 +18,7 @@ This repository demonstrates the **functional modelling, simulation, and synthes
 * [Submodule Functional Simulation](#submodule-functional-simulation)
 * [Synthesis with Yosys](#synthesis-with-yosys)
 * [Post-Synthesis Functional Simulation](#post-synthesis-functional-simulation)
+* [RTL-to-PostSynthesis Workflow](#vsdbabysoc-rtl-to-post-synthesis-workflow)
 
 ---
 
@@ -145,6 +146,7 @@ sandpiper-saas -i ./src/module/*.tlv -o rvmyth.v --bestsv --noline -p verilog --
 After successful conversion, you’ll find a new file named `rvmyth.v` inside the `src/module` directory.
 
 ---
+
 
 #### 5. Verify the generated files
 
@@ -488,6 +490,26 @@ gtkwave post_synth_sim.vcd
 
 **Observation:**
 The synthesized netlist matches the functional behaviour of the RTL design, confirming correctness post-synthesis.
+
+
+## **VSDBabySoC RTL-to-Post-Synthesis Workflow**
+
+```mermaid
+flowchart TD
+A[TL-Verilog - RVMYTH] --> B[Convert to Verilog - SandPiper]
+B --> C[Write & Integrate Testbench]
+C --> D[Compile RTL - Icarus Verilog]
+D --> E[Functional Simulation & Waveform Verification - GTKWave]
+E --> F[Synthesis - Yosys]
+F --> G[Post-Synthesis Simulation & Verification - GTKWave]
+G --> H[Optional: FPGA Implementation / Bitstream Generation]
+```
+
+
+
+
+
+
 
 ---
 
