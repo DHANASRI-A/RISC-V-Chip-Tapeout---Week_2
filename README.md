@@ -2,7 +2,7 @@
 
 # VSDBabySoC – Functional Modelling & FPGA Synthesis
 
-This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC). The project integrates the **RVMYTH CPU core**, **PLL**, and **DAC**, and is designed for educational and verification purposes.
+This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC). The project integrates the **RVMYTH CPU core**, **PLL**, and **DAC**.
 
 ---
 
