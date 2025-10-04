@@ -149,13 +149,14 @@ The RVMYTH module is the heart of the SoC, implementing a simple **RISC-V proces
 ```bash
 mkdir -p ~/Desktop/VSDBabySoC/output/rvmyth
 
-iverilog -o ~/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out \
-  -DPRE_SYNTH_SIM \
-  -I ~/Desktop/VSDBabySoC/src/include \
-  -I ~/Desktop/VSDBabySoC/src/module \
-  ~/Desktop/VSDBabySoC/src/module/tb_rvmyth.v
+iverilog -o ~/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out
+-DPRE_SYNTH_SIM
+-I ~/Desktop/VSDBabySoC/src/include
+-I ~/Desktop/VSDBabySoC/src/module ~/Desktop/VSDBabySoC/src/module/clk_gate.v
+~/Desktop/VSDBabySoC/src/module/rvmyth.v ~/Desktop/VSDBabySoC/src/module/tb_rvmyth.v
 
-vvp ~/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out
+vvp /home/vsduser/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out
+
 gtkwave rvmyth.vcd
 ```
 
