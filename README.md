@@ -13,7 +13,7 @@ This repository demonstrates the **functional modelling, simulation, and FPGA sy
 * [BabySoC Modules](#babysoc-modules)
 * [Simulation Setup](#simulation-setup)
 * [Simulation Steps](#simulation-steps)
-* [Observations & Waveforms](#observations--waveforms)
+* [Submodule Functional Simulation](#submodule-functional-simulation)
 * [FPGA Synthesis with Yosys](#fpga-synthesis-with-yosys)
 * [Post-Synthesis Functional Simulation](#post-synthesis-functional-simulation)
 
@@ -102,24 +102,118 @@ gtkwave ../../output/babysoc_sim.vcd
 ```
 
 ![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_pre_synthesis.png)
+
 ---
 
-## Observations & Waveforms
 
-### Reset Operation
 
-**Screenshot:** `screenshots/reset_waveform.png`
-**Observation:** All registers are properly initialized.
+## Submodule Functional Simulation
 
-### Clock Signal
+Before simulating the complete SoC (`vsdbabysoc.v`), each **submodule** is functionally verified individually to ensure correct behavior.
 
-**Screenshot:** `screenshots/clock_waveform.png`
-**Observation:** Clock is stable, driving sequential elements correctly.
+### 1. **DAC Module (`avsddac.v`)**
 
-### Dataflow Between Modules
+The DAC (Digital-to-Analog Converter) converts the digital data output from the RVMYTH core into an analog signal.
 
-**Screenshot:** `screenshots/dataflow_waveform.png`
-**Observation:** RVMYTH updates registers, DAC converts digital signals to analog-like outputs.
+#### **Commands Used**
+
+```bash
+# Create output directory
+mkdir -p ~/Desktop/VSDBabySoC/output/avsddac
+
+# Compile the DAC module testbench
+iverilog -o ~/Desktop/VSDBabySoC/output/avsddac/avsddac.out \
+  -DPRE_SYNTH_SIM \
+  -I ~/Desktop/VSDBabySoC/src/include \
+  -I ~/Desktop/VSDBabySoC/src/module \
+  ~/Desktop/VSDBabySoC/src/module/tb_avsddac.v
+
+# Run the simulation
+vvp ~/Desktop/VSDBabySoC/output/avsddac/avsddac.out
+
+# View the waveform
+gtkwave avsddac.vcd
+```
+
+#### **Screenshot:**
+
+> ![DAC Simulation Waveform](screenshots/avsddac_waveform.png)
+
+#### **Observation:**
+
+The DAC correctly converts the input digital values into an analog-like output waveform. Reset and clock synchronization are verified successfully.
+
+---
+
+### 2. **PLL Module (`avsdpll.v`)**
+
+The PLL (Phase-Locked Loop) generates a stable, higher-frequency clock for SoC synchronization.
+
+#### **Commands Used**
+
+```bash
+mkdir -p ~/Desktop/VSDBabySoC/output/avsdpll
+
+iverilog -o ~/Desktop/VSDBabySoC/output/avsdpll/avsdpll.out \
+  -DPRE_SYNTH_SIM \
+  -I ~/Desktop/VSDBabySoC/src/include \
+  -I ~/Desktop/VSDBabySoC/src/module \
+  ~/Desktop/VSDBabySoC/src/module/tb_avsdpll.v
+
+vvp ~/Desktop/VSDBabySoC/output/avsdpll/avsdpll.out
+gtkwave avsdpll.vcd
+```
+
+#### **Screenshot:**
+
+> ![PLL Simulation Waveform](screenshots/avsdpll_waveform.png)
+
+#### **Observation:**
+
+PLL multiplies the input reference clock to generate a stable, high-frequency output clock used by other SoC modules.
+
+---
+
+### 3. **RVMYTH CPU Core (`rvmyth.v`)**
+
+The RVMYTH module is the heart of the SoC, implementing a simple **RISC-V processor** that executes instructions and communicates with other components.
+
+#### **Commands Used**
+
+```bash
+mkdir -p ~/Desktop/VSDBabySoC/output/rvmyth
+
+iverilog -o ~/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out \
+  -DPRE_SYNTH_SIM \
+  -I ~/Desktop/VSDBabySoC/src/include \
+  -I ~/Desktop/VSDBabySoC/src/module \
+  ~/Desktop/VSDBabySoC/src/module/tb_rvmyth.v
+
+vvp ~/Desktop/VSDBabySoC/output/rvmyth/rvmyth.out
+gtkwave rvmyth.vcd
+```
+
+#### **Screenshot:**
+
+> ![RVMYTH Simulation Waveform](screenshots/rvmyth_waveform.png)
+
+#### **Observation:**
+
+The CPU executes basic instructions and correctly drives the internal data bus. Instruction fetch, decode, and execution stages are verified from the waveform.
+
+---
+
+### **Summary**
+
+| Module      | Function Verified                          | Result   |
+| ----------- | ------------------------------------------ | -------- |
+| `avsddac.v` | Digital to Analog conversion               | ✅ Passed |
+| `avsdpll.v` | Clock multiplication and stabilization     | ✅ Passed |
+| `rvmyth.v`  | Instruction execution and register updates | ✅ Passed |
+
+---
+
+
 
 ---
 
