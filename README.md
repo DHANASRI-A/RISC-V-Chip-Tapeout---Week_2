@@ -193,6 +193,11 @@ hierarchy -check -top vsdbabysoc
 # 6. Synthesis
 synth -top vsdbabysoc
 
+```
+
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/3489b418877d43068f74f9d2212cfbda74b50d29/Pictures/Screenshot%202025-10-04%20163913.png)
+
+```
 # 7. Map D flip-flops
 dfflibmap -liberty ./src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 
