@@ -15,7 +15,6 @@ This repository demonstrates the **functional modelling, simulation, and FPGA sy
 * [Simulation Steps](#simulation-steps)
 * [Observations & Waveforms](#observations--waveforms)
 * [FPGA Synthesis with Yosys](#fpga-synthesis-with-yosys)
-* [Errors Encountered & Lessons Learned](#errors-encountered--lessons-learned)
 * [Next Steps](#next-steps)
 
 ---
@@ -173,8 +172,11 @@ read_verilog -I ./src/include ./src/module/clk_gate.v
 # (comment out include "sp_verilog.vh" in clk_gate.v if missing)
 
 ```
+---
+
 ![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e8d11dc725b16cdc4a60a621daf8f55aec53966b/Pictures/Screenshot%202025-10-04%20160821.png)
 
+---
 ```
 
 # 4. Read standard cell / custom libraries
@@ -182,8 +184,11 @@ read_liberty -lib ./src/lib/avsdpll.lib
 read_liberty -lib ./src/lib/avsddac.lib
 read_liberty -lib ./src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
+---
 
 ![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/730fa15b3858f1b4cc65982539f173a73292396c/Pictures/Screenshot%202025-10-04%20161028.png) 
+
+---
 
 ```
 
@@ -194,8 +199,11 @@ hierarchy -check -top vsdbabysoc
 synth -top vsdbabysoc
 
 ```
+---
 
 ![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/3489b418877d43068f74f9d2212cfbda74b50d29/Pictures/Screenshot%202025-10-04%20163913.png)
+
+---
 
 ```
 # 7. Map D flip-flops
@@ -214,28 +222,17 @@ clean -purge
 rename -enumerate
 stat
 
+```
+---
+
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/66fcbf58ce5dc7788f8ad615e5bfaba22abdd6f5/Pictures/Screenshot%202025-10-04%20164507.png)
+
+---
+```
 # 11. Write synthesized Verilog
 write_verilog -noattr ./output/synth/vsdbabysoc.synth.v
 ```
 
-> **Screenshots:**
->
-> * `screenshots/synth_summary.png` – synthesis summary.
-> * `screenshots/flattened_stat.png` – flattened netlist stats.
-> * `screenshots/synth_file.png` – generated synthesized Verilog.
-
----
-
-## Errors Encountered & Lessons Learned
-
-1. Module paths incorrect → fixed by correcting `-I` and file paths.
-2. Output folder missing → created manually before `write_verilog`.
-3. Library loading errors → verified `.lib` files exist in `lib/`.
-4. Yosys commands vs shell commands → `mkdir` must be done in terminal, not inside Yosys.
-
-> **Screenshot:** `screenshots/error_messages.png` (optional)
-
----
 
 ## Next Steps
 
