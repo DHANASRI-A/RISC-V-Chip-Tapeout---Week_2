@@ -8,13 +8,13 @@ This document explains the basic concepts of a System on Chip (SoC) and how the 
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. What is a System on Chip (SoC)
-3. Main Components of SoC
-4. Understanding the BabySoC Design
-5. Functional Modelling and Simulation Process
-6. Conclusion
-7. References and Resources
+1. [Introduction](#1-introduction)
+2. [What is a System on Chip (SoC)](#2-what-is-a-system-on-chip-soc)
+3. [Main Components of SoC](#3-main-components-of-soc)
+4. [Understanding the BabySoC Design](#4-understanding-the-babysoc-design)
+5. [Functional Modelling and Simulation Process](#5-functional-modelling-and-simulation-process)
+6. [Conclusion](#6-conclusion)
+7. [References and Resources](#7-references-and-resources)
 
 ---
 
@@ -110,15 +110,24 @@ This hands-on approach builds a strong foundation for advanced topics such as RT
 * Fundamentals of SoC Design:
   
   [https://github.com/hemanthkumardm/SFAL-VSD-SoCJourney/tree/main/11.%20Fundamentals%20of%20SoC%20Design](https://github.com/hemanthkumardm/SFAL-VSD-SoCJourney/tree/main/11.%20Fundamentals%20of%20SoC%20Design)
+  
 * VSDBabySoC Project:
   
   [https://github.com/manili/VSDBabySoC](https://github.com/manili/VSDBabySoC)
 
 **Video Tutorials**
 
-* Introduction to SoC Design (Neso Academy): [https://www.youtube.com/watch?v=qtw5z9H6Rss](https://www.youtube.com/watch?v=qtw5z9H6Rss)
-* RISC-V BabySoC Overview (VSDOpen)        : [https://www.youtube.com/watch?v=vvV_7iASuSg](https://www.youtube.com/watch?v=vvV_7iASuSg)
-* Verilog Simulation and GTKWave Tutorial  : [https://www.youtube.com/watch?v=8h6Bf3UL6aA](https://www.youtube.com/watch?v=8h6Bf3UL6aA)
+* Introduction to SoC Design (Neso Academy):
+  
+  [https://www.youtube.com/watch?v=qtw5z9H6Rss](https://www.youtube.com/watch?v=qtw5z9H6Rss)
+  
+* RISC-V BabySoC Overview (VSDOpen):
+  
+  [https://www.youtube.com/watch?v=vvV_7iASuSg](https://www.youtube.com/watch?v=vvV_7iASuSg)
+  
+* Verilog Simulation and GTKWave Tutorial:
+  
+  [https://www.youtube.com/watch?v=8h6Bf3UL6aA](https://www.youtube.com/watch?v=8h6Bf3UL6aA)
 
 ---
 
