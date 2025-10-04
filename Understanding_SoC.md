@@ -8,7 +8,7 @@ This document explains the basic concepts of a System on Chip (SoC) and how the 
 
 ## Table of Contents
 
-1. Introduction
+1. [Introduction](#introduction)
 2. What is a System on Chip (SoC)
 3. Main Components of SoC
 4. Understanding the BabySoC Design
