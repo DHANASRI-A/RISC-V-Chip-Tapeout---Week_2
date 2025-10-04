@@ -74,40 +74,6 @@ VSDBabySoC is a compact yet highly capable **SoC based on RISC-V architecture**,
 * **GTKWave** – View `.vcd` waveform files for signal analysis.
 
 ---
-
-## Simulation Steps
-
-1. **Clone the BabySoC repo:**
-
-```bash
-git clone https://github.com/manili/VSDBabySoC
-cd VSDBabySoC/src/module/
-```
-
-2. **Compile Verilog modules:**
-
-```bash
-iverilog -o ../../output/babysoc_sim.out -I ../include *.v testbench.v
-```
-
-3. **Run simulation:**
-
-```bash
-./../../output/babysoc_sim.out
-```
-
-4. **Open waveform in GTKWave:**
-
-```bash
-gtkwave ../../output/babysoc_sim.vcd
-```
-
-![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_pre_synthesis.png)
-
----
-
-
-
 ## Submodule Functional Simulation
 
 Before simulating the complete SoC (`vsdbabysoc.v`), each **submodule** is functionally verified individually to ensure correct behavior.
@@ -214,8 +180,43 @@ The CPU executes basic instructions and correctly drives the internal data bus. 
 ---
 
 
+## Simulation Steps
+
+1. **Clone the BabySoC repo:**
+
+```bash
+git clone https://github.com/manili/VSDBabySoC
+cd VSDBabySoC/src/module/
+```
+
+2. **Compile Verilog modules:**
+
+```bash
+iverilog -o ../../output/babysoc_sim.out -I ../include *.v testbench.v
+```
+
+3. **Run simulation:**
+
+```bash
+./../../output/babysoc_sim.out
+```
+
+4. **Open waveform in GTKWave:**
+
+```bash
+gtkwave ../../output/babysoc_sim.vcd
+```
+
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e56e2b58a789dbe75b6af7c7ba7f82d68ea29cc4/Pictures/w2_pre_synthesis.png)
 
 ---
+
+
+
+
+
+
+
 
 ## Synthesis with Yosys
 

@@ -1,0 +1,54 @@
+$date
+	Sat Oct  4 22:22:08 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_avsdpll $end
+$var wire 1 ! CLK $end
+$var reg 1 " ENb_CP $end
+$var reg 1 # ENb_VCO $end
+$var reg 1 $ REF $end
+$var reg 1 % VCO_IN $end
+$scope module dut $end
+$var wire 1 " ENb_CP $end
+$var wire 1 # ENb_VCO $end
+$var wire 1 $ REF $end
+$var wire 1 % VCO_IN $end
+$var reg 1 ! CLK $end
+$var real 1 & lastedge $end
+$var real 1 ' period $end
+$var real 1 ( refpd $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+r0 (
+r25 '
+r0 &
+0%
+0$
+0#
+0"
+0!
+$end
+#10000
+r1e-08 &
+1$
+#20000
+0$
+#30000
+r3e-08 &
+r2.5e-09 '
+r2e-08 (
+1$
+#40000
+0$
+#50000
