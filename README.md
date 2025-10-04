@@ -270,8 +270,7 @@ testbench.v
 
 * Executes the post-synthesis simulation, generating `.vcd` waveform output.
 
-> **Screenshot:** Terminal showing simulation run
-> Example: `screenshots/post_synth_terminal.png`
+
 
 ---
 
