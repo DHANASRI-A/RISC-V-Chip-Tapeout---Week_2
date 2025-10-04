@@ -1,8 +1,9 @@
 
 
-# VSDBabySoC – Functional Modelling & FPGA Synthesis
+# VSDBabySoC – RISC-V SoC Simulation & Synthesis
 
-This repository demonstrates the **functional modelling, simulation, and FPGA synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC). The project integrates the **RVMYTH CPU core**, **PLL**, and **DAC**.
+
+This repository demonstrates the **functional modelling, simulation, and synthesis** of the **VSDBabySoC design**, a compact RISC-V-based System on Chip (SoC). The project integrates the **RVMYTH CPU core**, **PLL**, and **DAC**.
 
 ---
 
@@ -14,7 +15,7 @@ This repository demonstrates the **functional modelling, simulation, and FPGA sy
 * [Simulation Setup](#simulation-setup)
 * [Simulation Steps](#simulation-steps)
 * [Submodule Functional Simulation](#submodule-functional-simulation)
-* [FPGA Synthesis with Yosys](#fpga-synthesis-with-yosys)
+* [Synthesis with Yosys](#synthesis-with-yosys)
 * [Post-Synthesis Functional Simulation](#post-synthesis-functional-simulation)
 
 ---
@@ -206,9 +207,9 @@ The CPU executes basic instructions and correctly drives the internal data bus. 
 
 | Module      | Function Verified                          | Result   |
 | ----------- | ------------------------------------------ | -------- |
-| `avsddac.v` | Digital to Analog conversion               | ✅ Passed |
-| `avsdpll.v` | Clock multiplication and stabilization     | ✅ Passed |
-| `rvmyth.v`  | Instruction execution and register updates | ✅ Passed |
+| `avsddac.v` | Digital to Analog conversion               |  Passed |
+| `avsdpll.v` | Clock multiplication and stabilization     |  Passed |
+| `rvmyth.v`  | Instruction execution and register updates |  Passed |
 
 ---
 
@@ -216,7 +217,7 @@ The CPU executes basic instructions and correctly drives the internal data bus. 
 
 ---
 
-## FPGA Synthesis with Yosys
+## Synthesis with Yosys
 
 ### Repository Structure
 
@@ -237,7 +238,6 @@ VSDBabySoC/
     └── synth/
 ```
 
-> **Screenshot:** `screenshots/repo_structure.png`
 
 ---
 
