@@ -172,6 +172,11 @@ read_verilog -I ./src/include ./src/module/rvmyth.v
 read_verilog -I ./src/include ./src/module/clk_gate.v
 # (comment out include "sp_verilog.vh" in clk_gate.v if missing)
 
+```
+![img](https://github.com/DHANASRI-A/RISC-V-Chip-Tapeout---Week_2/blob/e8d11dc725b16cdc4a60a621daf8f55aec53966b/Pictures/Screenshot%202025-10-04%20160821.png)
+
+```
+
 # 4. Read standard cell / custom libraries
 read_liberty -lib ./src/lib/avsdpll.lib
 read_liberty -lib ./src/lib/avsddac.lib
